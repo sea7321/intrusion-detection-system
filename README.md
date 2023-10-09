@@ -20,7 +20,7 @@ Intrusion Detection System
     │
     └───src
         │   decision_tree.py
-        │   main.py
+        │   intrusion_detection_system.py
         │   preprocessing.py
         │   requirements.txt        
         │
