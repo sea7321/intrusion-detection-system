@@ -1,0 +1,5 @@
+# To run: $ pip install -r requirements.txt
+colorama
+termcolor
+pandas
+scikit-learn
