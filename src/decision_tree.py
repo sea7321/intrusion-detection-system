@@ -1,7 +1,9 @@
 import pandas as pd
+import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 
 
 def decision_tree():
@@ -31,3 +33,18 @@ def decision_tree():
     # Calculate the accuracy of the model
     accuracy = accuracy_score(y_test, y_pred)
     print("Accuracy: {}".format(accuracy * 100))
+
+    # Calculate false positves and false negatives for each category
+    labels = list(set(y.to_list()))
+    CM = confusion_matrix(y_test, y_pred, labels=labels)
+
+    FP = CM.sum(axis=0) - np.diag(CM)
+    FN = CM.sum(axis=1) - np.diag(CM)
+    TP = np.diag(CM)
+    TN = np.sum(np.concatenate(CM)) - (FP + FN + TP)
+    FPR = FP/(FP+TN)
+    FNR = FN/(TP+FN)
+
+    for i, label in enumerate(labels):
+        print(f"{label}: \tFalse positives: {round(FPR[i] * 100, 2)}%, {FP[i]} / {FP[i] + TN[i]}, "
+              f"\tFalse negatives: {round(FNR[i] * 100, 2)}%, {FN[i]} / {TP[i] + FN[i]}")
