@@ -24,6 +24,12 @@ Intrusion Detection System
         │   preprocessing.py
         │   requirements.txt        
         │
+        └───output
+            │   anomaly_confusion_matrix.csv*
+            │   anomaly_rates.txt*
+            │   misuse_confusion_matrix.csv*
+            │   misuse_rates.txt*
+            │
 ```
 
 ## Getting Started

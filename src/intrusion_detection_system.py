@@ -22,11 +22,11 @@ def main():
 
     # run the decision tree classifier for misuse detection
     print(colored("[*] Running the model for misuse-based dataset...", "blue"))
-    decision_tree('../data/misuse_training_data.csv')
+    decision_tree("misuse")
 
     # run the decision tree classifier for anomaly detection
     print(colored("[*] Running the model against anomaly-based dataset...", "blue"))
-    decision_tree('../data/anomaly_training_data.csv')
+    decision_tree("anomaly")
 
 
 if __name__ == "__main__":
