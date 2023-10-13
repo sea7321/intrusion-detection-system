@@ -10,26 +10,25 @@ information from the NSL-KDD dataset. These were classified by using a decision 
 Intrusion Detection System
 │   README.md
 │   ...
+│
+└───data
+│   │   anomaly_training_data.csv*
+│   │   misuse_training_data.csv*
+│   │   test.csv
+│   │   train.csv
+│
 └───src
+    │   decision_tree.py
+    │   intrusion_detection_system.py
+    │   preprocessing.py
+    │   requirements.txt        
     │
-    └───data
-    │   │   anomaly_training_data.csv*
-    │   │   misuse_training_data.csv*
-    │   │   test.csv
-    │   │   train.csv
-    │
-    └───src
-        │   decision_tree.py
-        │   intrusion_detection_system.py
-        │   preprocessing.py
-        │   requirements.txt        
+    └───output
+        │   anomaly_confusion_matrix.csv*
+        │   anomaly_rates.txt*
+        │   misuse_confusion_matrix.csv*
+        │   misuse_rates.txt*
         │
-        └───output
-            │   anomaly_confusion_matrix.csv*
-            │   anomaly_rates.txt*
-            │   misuse_confusion_matrix.csv*
-            │   misuse_rates.txt*
-            │
 ```
 
 ## Getting Started
@@ -40,6 +39,7 @@ Intrusion Detection System
 * Termcolor
 * Pandas
 * Sklearn
+* Psutil
 
 ### Installing
 ```

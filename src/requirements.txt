@@ -3,3 +3,4 @@ colorama
 termcolor
 pandas
 scikit-learn
+psutil
