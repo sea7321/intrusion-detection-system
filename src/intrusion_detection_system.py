@@ -12,7 +12,7 @@ from colorama import init
 from termcolor import colored
 
 # Local Imports
-from decision_tree import decision_tree
+from classifiers import decision_tree, multi_layer_perceptron
 from preprocessing import preprocess
 
 # Global flag to signal the second thread to stop
@@ -55,15 +55,23 @@ def main():
 
     # preprocess data
     print(colored("[*] Preprocessing data...", "blue"))
-    preprocess()
+    #preprocess()
 
     # run the decision tree classifier for misuse detection
     print(colored("[*] Running the model for misuse-based dataset...", "blue"))
-    decision_tree("misuse")
+    #decision_tree("misuse", "dt")
 
     # run the decision tree classifier for anomaly detection
     print(colored("[*] Running the model against anomaly-based dataset...", "blue"))
-    decision_tree("anomaly")
+    #decision_tree("anomaly", "dt")
+
+    # run the decision tree classifier for misuse detection
+    print(colored("[*] Running the model for misuse-based dataset...", "blue"))
+    multi_layer_perceptron("misuse", "mlp")
+
+    # run the decision tree classifier for anomaly detection
+    print(colored("[*] Running the model against anomaly-based dataset...", "blue"))
+    multi_layer_perceptron("anomaly", "mlp")
 
     # signal the monitoring thread to stop
     stop_event.set()

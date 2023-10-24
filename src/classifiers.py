@@ -1,5 +1,5 @@
 """
-File: decision_tree.py
+File: classifiers.py
 Description: Decision tree classifier.
 """
 
@@ -10,13 +10,14 @@ import time
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from termcolor import colored
 
 
-def calculate_rates(y, y_test, y_pred, dataset):
+def calculate_rates(y, y_test, y_pred, dataset, classifier):
     """
     Calculates the rates of the dataset.
     :param y: (String[]) the columns in the dataset
@@ -25,7 +26,7 @@ def calculate_rates(y, y_test, y_pred, dataset):
     :param dataset: (String) the dataset
     :return: (Tuple) Overall FPR and FNR
     """
-    with open('./output/{}_rates.txt'.format(dataset), 'w') as file:
+    with open('./output/{}_{}_rates.txt'.format(classifier, dataset), 'w') as file:
         # calculate confusion matrix
         np.seterr(invalid='ignore')
         labels = list(set(y.to_list()))
@@ -33,7 +34,7 @@ def calculate_rates(y, y_test, y_pred, dataset):
 
         # export confusion matrix to CSV file
         df_confusion = pd.DataFrame(conf_matrix, columns=labels, index=labels)
-        df_confusion.to_csv('./output/{}_confusion_matrix.csv'.format(dataset))
+        df_confusion.to_csv('./output/{}_{}_confusion_matrix.csv'.format(classifier, dataset))
 
         # calculate FP, FN, TP, and TNs
         FP = conf_matrix.sum(axis=0) - np.diag(conf_matrix)
@@ -64,7 +65,7 @@ def calculate_rates(y, y_test, y_pred, dataset):
         return overall_FPR, overall_FNR
 
 
-def decision_tree(dataset):
+def decision_tree(dataset, classifier):
     """
     Classifies a given dataset based on the 'class' target variable.
     :param dataset: (String) the dataset name
@@ -98,7 +99,46 @@ def decision_tree(dataset):
     end = time.time()
 
     # calculate false positive and false negative rates
-    rates = calculate_rates(y, y_test, y_pred, dataset)
+    rates = calculate_rates(y, y_test, y_pred, dataset, classifier)
+    print(colored("\tOverall FPR: {:.4f} %".format(np.mean(rates[0])), "yellow"))
+    print(colored("\tOverall FNR: {:.4f} %".format(np.mean(rates[1])), "yellow"))
+
+    # calculate the accuracy of the model
+    accuracy = accuracy_score(y_test, y_pred)
+    print(colored("\tAccuracy: {:.4f} %".format(accuracy * 100), "green"))
+    print(colored("\tTime: {:.4f} seconds\n".format(end - start), "green"))
+
+
+def multi_layer_perceptron(dataset, classifier):
+    # start the timer
+    start = time.time()
+
+    # load the training data
+    print("\tLoading in the data...")
+    data = pd.read_csv('../data/{}_training_data.csv'.format(dataset))
+
+    # split the training data into features and the target variable
+    X = data.drop('class', axis=1)
+    y = data['class']
+
+    # split the dataset into training and testing sets
+    print("\tSplitting the data into a training and testing set...")
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    # create a Multilayer Perceptron (MLP) classifier
+    mlp_classifier = MLPClassifier(random_state=1, max_iter=300).fit(X_train, y_train)
+
+    # train the MLP classifier on the training data
+    print("\tClassifying the training data...")
+    mlp_classifier.fit(X_train, y_train)
+
+    # make predictions on the test data
+    print("\tMaking predictions on the testing data...")
+    y_pred = mlp_classifier.predict(X_test)
+    end = time.time()
+
+    # calculate false positive and false negative rates
+    rates = calculate_rates(y, y_test, y_pred, dataset, classifier)
     print(colored("\tOverall FPR: {:.4f} %".format(np.mean(rates[0])), "yellow"))
     print(colored("\tOverall FNR: {:.4f} %".format(np.mean(rates[1])), "yellow"))
 
