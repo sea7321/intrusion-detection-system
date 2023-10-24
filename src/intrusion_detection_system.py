@@ -55,22 +55,22 @@ def main():
 
     # preprocess data
     print(colored("[*] Preprocessing data...", "blue"))
-    #preprocess()
+    preprocess()
 
     # run the decision tree classifier for misuse detection
-    print(colored("[*] Running the model for misuse-based dataset...", "blue"))
-    #decision_tree("misuse", "dt")
+    print(colored("[*] Running the decision tree classifier against the misuse-based dataset...", "blue"))
+    decision_tree("misuse", "dt")
 
     # run the decision tree classifier for anomaly detection
-    print(colored("[*] Running the model against anomaly-based dataset...", "blue"))
-    #decision_tree("anomaly", "dt")
+    print(colored("[*] Running the decision tree classifier against the anomaly-based dataset...", "blue"))
+    decision_tree("anomaly", "dt")
 
     # run the decision tree classifier for misuse detection
-    print(colored("[*] Running the model for misuse-based dataset...", "blue"))
+    print(colored("[*] Running the multi-layer perceptron classifier against the misuse-based dataset...", "blue"))
     multi_layer_perceptron("misuse", "mlp")
 
     # run the decision tree classifier for anomaly detection
-    print(colored("[*] Running the model against anomaly-based dataset...", "blue"))
+    print(colored("[*] Running the multi-layer perceptron classifier against the anomaly-based dataset...", "blue"))
     multi_layer_perceptron("anomaly", "mlp")
 
     # signal the monitoring thread to stop
