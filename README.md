@@ -3,7 +3,8 @@
 
 ## Description
 intrusion_detection_system.py uses misuse-based (signature-based) and anomaly-based detection to classify packet
-information from the NSL-KDD dataset. These were classified by using a decision tree, a supervised learning algorithm.
+information from the NSL-KDD dataset. These are classified by using a decision tree and a multilayer perceptron, two
+supervised learning algorithms.
 
 ## Project Structure
 ```
@@ -74,7 +75,7 @@ $ python3 intrusion_detection_system.py [-h] [-t] [-c CLASSIFY]
 ## Train Example
 
 ```
-# Run the intrusion detection system
+# Create, train, and save the models 
 $ python3 intrusion_detection_system.py -t
 ```
 
@@ -87,7 +88,8 @@ $ python3 intrusion_detection_system.py -t
 ## Classify Example
 
 ```
-# Run the intrusion detection system
+# Classify new attack data on pre-saved models
+$ python3 intrusion_detection_system.py -c <test_filename>
 $ python3 intrusion_detection_system.py -c ../data/sqlattack_testing_data.csv
 ```
 ![alt classify_example](resources/classify.png)
