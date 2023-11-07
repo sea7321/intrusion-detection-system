@@ -98,6 +98,18 @@ def preprocess():
     testing_df = testing_df[training_df.columns.tolist()]
     misuse_df = pd.concat([training_df, testing_df])
 
+    # gather sqlattack and udpstorm attack rows
+    sqlattack_df = misuse_df[misuse_df['class'] == "sqlattack"]
+    udpstorm_df = misuse_df[misuse_df['class'] == "udpstorm"]
+
+    # send first row to a separate testing file
+    sqlattack_df.head(1).to_csv(r'../data/sqlattack_testing_data.csv', index=False)
+    udpstorm_df.head(1).to_csv(r'../data/udpstorm_testing_data.csv', index=False)
+
+    # drop sqlattack and udpstorm attacks from datasets
+    misuse_df.drop(sqlattack_df.index, inplace=True)
+    misuse_df.drop(udpstorm_df.index, inplace=True)
+
     # create a copy of the DataFrame for misuse data
     anomaly_df = misuse_df.copy()
 

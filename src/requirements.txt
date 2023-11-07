@@ -4,3 +4,4 @@ termcolor
 pandas
 scikit-learn
 psutil
+pickle

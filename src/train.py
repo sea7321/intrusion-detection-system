@@ -1,14 +1,14 @@
 """
-File: classifiers.py
+File: train.py
 Description: Decision tree classifier.
 """
-
 # Standard Imports
 import time
 
 # Third-Party Imports
 import pandas as pd
 import numpy as np
+import pickle
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
@@ -65,12 +65,7 @@ def calculate_rates(y, y_test, y_pred, dataset, classifier):
         return overall_FPR, overall_FNR
 
 
-def decision_tree(dataset, classifier):
-    """
-    Classifies a given dataset based on the 'class' target variable.
-    :param dataset: (String) the dataset name
-    :return: None
-    """
+def train(dataset, classifier_name, classifier):
     # start the timer
     start = time.time()
 
@@ -86,9 +81,6 @@ def decision_tree(dataset, classifier):
     print("\tSplitting the data into a training and testing set...")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-    # create the decision tree classifier
-    classifier = DecisionTreeClassifier(random_state=42)
-
     # fit the classifier to the training data
     print("\tClassifying the training data...")
     classifier.fit(X_train, y_train)
@@ -98,8 +90,12 @@ def decision_tree(dataset, classifier):
     y_pred = classifier.predict(X_test)
     end = time.time()
 
+    # save the model
+    print("\tSaving the model...")
+    pickle.dump(classifier, open("./models/{}_{}_model.pickle".format(classifier_name, dataset), "wb"))
+
     # calculate false positive and false negative rates
-    rates = calculate_rates(y, y_test, y_pred, dataset, classifier)
+    rates = calculate_rates(y, y_test, y_pred, dataset, classifier_name)
     print(colored("\tOverall FPR: {:.4f} %".format(np.mean(rates[0])), "yellow"))
     print(colored("\tOverall FNR: {:.4f} %".format(np.mean(rates[1])), "yellow"))
 
@@ -109,40 +105,19 @@ def decision_tree(dataset, classifier):
     print(colored("\tTime: {:.4f} seconds\n".format(end - start), "green"))
 
 
-def multi_layer_perceptron(dataset, classifier):
-    # start the timer
-    start = time.time()
+def decision_tree(dataset, classifier_name):
+    """
+    Classifies a given dataset based on the 'class' target variable.
+    :param classifier_name: the classifier name
+    :param dataset: (String) the dataset name
+    :return: None
+    """
+    # create the decision tree (DT) classifier
+    dt_classifier = DecisionTreeClassifier(random_state=42)
+    train(dataset, classifier_name, dt_classifier)
 
-    # load the training data
-    print("\tLoading in the data...")
-    data = pd.read_csv('../data/{}_training_data.csv'.format(dataset))
 
-    # split the training data into features and the target variable
-    X = data.drop('class', axis=1)
-    y = data['class']
-
-    # split the dataset into training and testing sets
-    print("\tSplitting the data into a training and testing set...")
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-    # create a Multilayer Perceptron (MLP) classifier
-    mlp_classifier = MLPClassifier(random_state=1, max_iter=300).fit(X_train, y_train)
-
-    # train the MLP classifier on the training data
-    print("\tClassifying the training data...")
-    mlp_classifier.fit(X_train, y_train)
-
-    # make predictions on the test data
-    print("\tMaking predictions on the testing data...")
-    y_pred = mlp_classifier.predict(X_test)
-    end = time.time()
-
-    # calculate false positive and false negative rates
-    rates = calculate_rates(y, y_test, y_pred, dataset, classifier)
-    print(colored("\tOverall FPR: {:.4f} %".format(np.mean(rates[0])), "yellow"))
-    print(colored("\tOverall FNR: {:.4f} %".format(np.mean(rates[1])), "yellow"))
-
-    # calculate the accuracy of the model
-    accuracy = accuracy_score(y_test, y_pred)
-    print(colored("\tAccuracy: {:.4f} %".format(accuracy * 100), "green"))
-    print(colored("\tTime: {:.4f} seconds\n".format(end - start), "green"))
+def multi_layer_perceptron(dataset, classifier_name):
+    # create the Multilayer Perceptron (MLP) classifier
+    mlp_classifier = MLPClassifier(random_state=1, max_iter=300)
+    train(dataset, classifier_name, mlp_classifier)

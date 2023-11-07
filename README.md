@@ -1,5 +1,5 @@
 # Intrusion Detection System
-![alt background](resources/background.png)
+![alt background](resources/train_1.png)
 
 ## Description
 intrusion_detection_system.py uses misuse-based (signature-based) and anomaly-based detection to classify packet
@@ -14,21 +14,31 @@ Intrusion Detection System
 └───data
 │   │   anomaly_training_data.csv*
 │   │   misuse_training_data.csv*
+│   │   sqlattack_testing_data.csv*
 │   │   test.csv
 │   │   train.csv
+│   │   udpstorm_testing_data.csv*
 │
 └───src
-    │   decision_tree.py
+    │   classify.py
     │   intrusion_detection_system.py
     │   preprocessing.py
-    │   requirements.txt        
+    │   requirements.txt
+    │   train.py     
+    │
+    └───models
+    │   │   dt_anomaly_model.pickle
+    │   │   dt_misuse_model.pickle
+    │   │   mlp_anomaly_model.pickle
+    │   │   mlp_misuse_model.pickle
     │
     └───output
-        │   anomaly_confusion_matrix.csv*
-        │   anomaly_rates.txt*
-        │   misuse_confusion_matrix.csv*
-        │   misuse_rates.txt*
-        │
+    │   │   dt_anomaly_confusion_matrix.csv*
+    │   │   dt_anomaly_rates.txt*
+    │   │   dt_misuse_confusion_matrix.csv*
+    │   │   dt_misuse_rates.txt*
+    │   │   ...
+    │   
 ```
 
 ## Getting Started
@@ -38,8 +48,9 @@ Intrusion Detection System
 * Colorama 
 * Termcolor
 * Pandas
-* Sklearn
+* Scikit-learn
 * Psutil
+* Pickle
 
 ### Installing
 ```
@@ -57,8 +68,29 @@ $ pip install -r requirements.txt
 
 ```
 # Run the intrusion detection system
-$ python3 intrusion_detection_system.py
+$ python3 intrusion_detection_system.py [-h] [-t] [-c CLASSIFY]
 ```
+
+## Train Example
+
+```
+# Run the intrusion detection system
+$ python3 intrusion_detection_system.py -t
+```
+
+### Decision Tree
+![alt train_example](resources/train_1.png)
+
+### Multi-Layer Perceptron
+![alt train_example](resources/train_2.png)
+
+## Classify Example
+
+```
+# Run the intrusion detection system
+$ python3 intrusion_detection_system.py -c ../data/sqlattack_testing_data.csv
+```
+![alt classify_example](resources/classify.png)
 
 ## Authors
 * Savannah Alfaro, sea2985@rit.edu
