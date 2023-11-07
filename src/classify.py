@@ -1,3 +1,7 @@
+"""
+File: classify.py
+Description: Classifies attack data on pre-saved models.
+"""
 # Standard Imports
 import time
 
@@ -8,6 +12,13 @@ from termcolor import colored
 
 
 def classify(dataset, classifier_name, testing_filename):
+    """
+    Classifies an attack with the provided pre-saved classifier model.
+    :param dataset: (String) the dataset name
+    :param classifier_name: (String) the classifier name
+    :param testing_filename: (String) the testing filename
+    :return: None
+    """
     # start the timer
     start = time.time()
 

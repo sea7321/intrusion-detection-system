@@ -14,7 +14,7 @@ from termcolor import colored
 
 # Local Imports
 from preprocessing import preprocess
-from train import decision_tree, multi_layer_perceptron
+from train import decision_tree, multilayer_perceptron
 from classify import classify
 
 # Global flag to signal the second thread to stop
@@ -75,12 +75,12 @@ def main():
         decision_tree("anomaly", "dt")
 
         # run the decision tree classifier for misuse detection
-        print(colored("[*] Running the multi-layer perceptron classifier against the misuse-based dataset...", "blue"))
-        multi_layer_perceptron("misuse", "mlp")
+        print(colored("[*] Running the multilayer perceptron classifier against the misuse-based dataset...", "blue"))
+        multilayer_perceptron("misuse", "mlp")
 
         # run the decision tree classifier for anomaly detection
-        print(colored("[*] Running the multi-layer perceptron classifier against the anomaly-based dataset...", "blue"))
-        multi_layer_perceptron("anomaly", "mlp")
+        print(colored("[*] Running the multilayer perceptron classifier against the anomaly-based dataset...", "blue"))
+        multilayer_perceptron("anomaly", "mlp")
 
         # signal the monitoring thread to stop
         stop_event.set()

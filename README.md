@@ -82,7 +82,7 @@ $ python3 intrusion_detection_system.py -t
 ### Decision Tree
 ![alt train_example](resources/train_1.png)
 
-### Multi-Layer Perceptron
+### Multilayer Perceptron
 ![alt train_example](resources/train_2.png)
 
 ## Classify Example
