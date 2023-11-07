@@ -17,8 +17,8 @@ from preprocessing import preprocess
 from train import decision_tree, multi_layer_perceptron
 from classify import classify
 
-# # Global flag to signal the second thread to stop
-# stop_event = threading.Event()
+# Global flag to signal the second thread to stop
+stop_event = threading.Event()
 
 
 def monitoring():
@@ -82,8 +82,8 @@ def main():
         print(colored("[*] Running the multi-layer perceptron classifier against the anomaly-based dataset...", "blue"))
         multi_layer_perceptron("anomaly", "mlp")
 
-        # # signal the monitoring thread to stop
-        # stop_event.set()
+        # signal the monitoring thread to stop
+        stop_event.set()
 
     if args.classify:
         # run the decision tree classifier for misuse detection
@@ -102,21 +102,19 @@ def main():
         print(colored("[*] Running the anomaly decision tree model against {}...".format(args.classify[0]), "blue"))
         classify("anomaly", "mlp", args.classify[0])
 
-        # # signal the monitoring thread to stop
-        # stop_event.set()
+        # signal the monitoring thread to stop
+        stop_event.set()
 
 
 if __name__ == "__main__":
-    # # Create and start the main thread
-    # thread1 = threading.Thread(target=main)
-    # thread1.start()
-    #
-    # # Create and start the monitoring thread
-    # thread2 = threading.Thread(target=monitoring)
-    # thread2.start()
-    #
-    # # Wait for both threads to finish
-    # thread1.join()
-    # thread2.join()
+    # Create and start the main thread
+    thread1 = threading.Thread(target=main)
+    thread1.start()
 
-    main()
+    # Create and start the monitoring thread
+    thread2 = threading.Thread(target=monitoring)
+    thread2.start()
+
+    # Wait for both threads to finish
+    thread1.join()
+    thread2.join()
