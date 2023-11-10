@@ -1,5 +1,0 @@
-abnormal       : 	FPR: 0.34 %  (79/23072)		FNR: 0.36   %  (77/21481)
-normal         : 	FPR: 0.36 %  (77/21481)		FNR: 0.34   %  (79/23072)
-
-Overall FPR: 0.3501 %
-Overall FNR: 0.3501 %

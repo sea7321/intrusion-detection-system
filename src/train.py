@@ -4,6 +4,7 @@ Description: Creates, trains, and saves the models.
 """
 # Standard Imports
 import time
+import os
 
 # Third-Party Imports
 import pandas as pd
@@ -26,6 +27,11 @@ def calculate_rates(y, y_test, y_pred, dataset, classifier):
     :param dataset: (String) the dataset name
     :return: (Tuple) Overall FPR and FNR
     """
+    # create the output directory if it doesn't exist
+    if not os.path.exists('./output'):
+        os.makedirs('./output')
+
+    # create the confusion matrix and rates file
     with open('./output/{}_{}_rates.txt'.format(classifier, dataset), 'w') as file:
         # calculate confusion matrix
         np.seterr(invalid='ignore')
