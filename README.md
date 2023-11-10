@@ -3,8 +3,8 @@
 
 ## Description
 intrusion_detection_system.py uses misuse-based (signature-based) and anomaly-based detection to classify packet
-information from the NSL-KDD dataset. These are classified by using a decision tree and a multilayer perceptron, two
-supervised learning algorithms.
+information from the NSL-KDD dataset (https://www.kaggle.com/datasets/hassan06/nslkdd). These are classified by using a
+decision tree and a multilayer perceptron, two supervised learning algorithms.
 
 ## Project Structure
 ```
@@ -15,10 +15,10 @@ Intrusion Detection System
 └───data
 │   │   anomaly_training_data.csv*
 │   │   misuse_training_data.csv*
-│   │   sqlattack_testing_data.csv*
+│   │   sqlattack_testing_data.csv
 │   │   test.csv
 │   │   train.csv
-│   │   udpstorm_testing_data.csv*
+│   │   udpstorm_testing_data.csv
 │
 └───src
     │   classify.py
@@ -34,10 +34,10 @@ Intrusion Detection System
     │   │   mlp_misuse_model.pickle
     │
     └───output
-    │   │   dt_anomaly_confusion_matrix.csv*
-    │   │   dt_anomaly_rates.txt*
-    │   │   dt_misuse_confusion_matrix.csv*
-    │   │   dt_misuse_rates.txt*
+    │   │   dt_anomaly_confusion_matrix.csv
+    │   │   dt_anomaly_rates.txt
+    │   │   dt_misuse_confusion_matrix.csv
+    │   │   dt_misuse_rates.txt
     │   │   ...
     │   
 ```
@@ -89,7 +89,7 @@ $ python3 intrusion_detection_system.py -t
 
 ```
 # Classify new attack data on pre-saved models
-$ python3 intrusion_detection_system.py -c <test_filename>
+$ python3 intrusion_detcdection_system.py -c <test_filename>
 $ python3 intrusion_detection_system.py -c ../data/sqlattack_testing_data.csv
 ```
 ![alt classify_example](resources/classify.png)

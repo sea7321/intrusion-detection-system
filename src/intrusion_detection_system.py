@@ -54,8 +54,8 @@ def monitoring():
 def main():
     # parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--train", action='store_true', help="load in classifiers from files")
-    parser.add_argument("-c", "--classify", action='store', nargs=1, help="load in classifiers from files")
+    parser.add_argument("-t", "--train", action='store_true', help="create, train, and save the models")
+    parser.add_argument("-c", "--classify", action='store', nargs=1, help="classify an attack from pre-saved models")
     args = parser.parse_args()
 
     # initialize colorama
@@ -95,11 +95,11 @@ def main():
         classify("anomaly", "dt", args.classify[0])
 
         # run the decision tree classifier for misuse detection
-        print(colored("[*] Running the misuse decision tree model against {}...".format(args.classify[0]), "blue"))
+        print(colored("[*] Running the misuse multilayer perceptron model against {}...".format(args.classify[0]), "blue"))
         classify("misuse", "mlp", args.classify[0])
 
         # run the decision tree classifier for misuse detection
-        print(colored("[*] Running the anomaly decision tree model against {}...".format(args.classify[0]), "blue"))
+        print(colored("[*] Running the anomaly multilayer perceptron model against {}...".format(args.classify[0]), "blue"))
         classify("anomaly", "mlp", args.classify[0])
 
         # signal the monitoring thread to stop
